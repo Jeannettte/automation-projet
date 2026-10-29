@@ -1,0 +1,4 @@
+[
+  {"id": "UI-03a", "case": "below limit (9 digits)", "phone": "061234567", "accepted": false},
+  {"id": "UI-03b", "case": "at limit (10 digits)", "phone": "0612345678", "accepted": true}
+]
