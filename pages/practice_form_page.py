@@ -3,6 +3,7 @@
 Locators prefer stable ids / `for` attributes. No layout-based XPath.
 """
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 
 from pages.base_page import BasePage
@@ -81,14 +82,19 @@ class PracticeFormPage(BasePage):
         self._select_react_option(self.CITY, city)
 
     def _select_react_option(self, dropdown_locator, option_text: str):
-        self.click(dropdown_locator)
-        self.click(
+        """react-select: type to filter, wait for the option, confirm with Enter."""
+        container = self.find(dropdown_locator)
+        self.scroll_into_view(container)
+        search = container.find_element(By.CSS_SELECTOR, "input")
+        search.send_keys(option_text)
+        self.find_visible(
             (
                 By.XPATH,
-                "//div[starts-with(@id,'react-select-') and contains(@id,'-option-')"
+                "//div[contains(@id,'-option-')"
                 f" and normalize-space()='{option_text}']",
             )
         )
+        search.send_keys(Keys.ENTER)
 
     def fill_required_fields(self, student: Student):
         self.fill_first_name(student.first_name)
