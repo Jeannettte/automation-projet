@@ -1,0 +1,50 @@
+[
+  {
+    "id": "UI-10-D01",
+    "description": "valid complete student",
+    "overrides": {},
+    "accepted": true,
+    "invalid_field": null
+  },
+  {
+    "id": "UI-10-D02",
+    "description": "valid alternate student",
+    "overrides": {
+      "first_name": "Paul",
+      "last_name": "Dupont",
+      "email": "paul.dupont@example.com",
+      "gender": "Male",
+      "phone": "0712345678",
+      "address": "8 avenue des Tests\nParis"
+    },
+    "accepted": true,
+    "invalid_field": null
+  },
+  {
+    "id": "UI-10-D03",
+    "description": "missing required first name",
+    "overrides": {
+      "first_name": ""
+    },
+    "accepted": false,
+    "invalid_field": "first_name"
+  },
+  {
+    "id": "UI-10-D04",
+    "description": "invalid email format",
+    "overrides": {
+      "email": "adresse-invalide"
+    },
+    "accepted": false,
+    "invalid_field": "email"
+  },
+  {
+    "id": "UI-10-D05",
+    "description": "missing required phone number",
+    "overrides": {
+      "phone": ""
+    },
+    "accepted": false,
+    "invalid_field": "phone"
+  }
+]

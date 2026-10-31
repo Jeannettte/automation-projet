@@ -38,7 +38,19 @@ Tests check behaviour, not just that a click worked:
 * the absence of the confirmation dialog when a submission must be refused.
 
 ### Test data and data-driven testing
-data_factory.py generates a valid student with a random suffix in the name and e-mail, so each test uses its own data. UI-03 is data-driven: the same test function runs against each entry of test-data/phone_boundaries.json (9 digits rejected, 10 digits accepted), and the report shows one line per data set. UI-03c checks the upper boundary (11 digits) as a rule: the application must never accept more than 10 digits, whether it truncates the input or rejects the form.
+data_factory.py generates a valid student with a random suffix in the name and e-mail, so each test uses its own data. UI-10 is the main data-driven scenario: the same test function runs against the five entries of test-data/ui_10_form_cases.json. It covers two accepted submissions and three rejected submissions (missing first name, invalid email, and missing phone), and the report shows one result per data set. UI-03 separately uses test-data/phone_boundaries.json for the 9/10-digit boundary. UI-03c checks the upper boundary (11 digits) as a rule: the application must never accept more than 10 digits, whether it truncates the input or rejects the form.
+
+Run UI-10 alone and generate the configured HTML report:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/ui/test_ui_10_data_driven.py -v
+```
+
+Run the UI suite with four independent workers:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest tests/ui/ -m ui -n 4 -v
+```
 
 ### Independence and parallel execution
 * The driver fixture is function-scoped: every test starts its own browser.

@@ -107,6 +107,25 @@ class PracticeFormPage(BasePage):
         self.fill_email(student.email)
         self.fill_address(student.address)
 
+    def fill_available_fields(self, student: Student):
+        """Fill every non-empty value, leaving omitted fields empty.
+
+        This is used by data-driven validation tests: an empty value is test
+        data, not a reason for the page object to invent a replacement.
+        """
+        if student.first_name:
+            self.fill_first_name(student.first_name)
+        if student.last_name:
+            self.fill_last_name(student.last_name)
+        if student.email:
+            self.fill_email(student.email)
+        if student.gender:
+            self.select_gender(student.gender)
+        if student.phone:
+            self.fill_phone(student.phone)
+        if student.address:
+            self.fill_address(student.address)
+
     def submit(self):
         self.click(self.SUBMIT)
 
