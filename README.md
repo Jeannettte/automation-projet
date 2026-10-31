@@ -9,7 +9,9 @@ Python was chosen for its short, readable syntax and for its ecosystem, which co
 
 pytest fixtures give every test its own browser and handle setup/teardown, so tests stay short and focused on the scenario
 ### Application under test 
-DemoQA (https://demoqa.com) is a public site built for practising test automation. Its Practice Form provides real behaviour for most mandatory controls: text fields, a phone number field, a multi-line textarea, radio buttons, a calendar date picker, dependent State/City dropdowns, and a confirmation dialog that displays the submitted data. The site is intended for practice, so automating it is consistent with its purpose (the team should still check its terms of use before submission).
+DemoQA (https://demoqa.com) is a public site built for practising test automation. Its Practice Form provides real behaviour for most mandatory controls: text fields, a phone number field, a multi-line textarea, radio buttons, a calendar date picker, dependent State/City dropdowns, and a confirmation dialog that displays the submitted data. 
+The automation scope also covers advanced interactions across other DemoQA modules, such as file and image uploads, JavaScript confirmation alerts, dynamic elements appearing after a delay, and progress bar state tracking. \
+The site is intended for practice, so automating it is consistent with its purpose (the team should still check its terms of use before submission).
 BookStore API (DemoQA) exposes a REST API with account creation, token authentication and book operations, which allows status code, body, schema, authentication, CRUD and negative tests on a related and legitimately testable service.
 
 ### Project layout and responsabilities 
@@ -17,8 +19,9 @@ BookStore API (DemoQA) exposes a REST API with account creation, token authentic
 * conftest.py : Provides the driver fixture (one fresh Chrome per test) and saves a screenshot to evidence/screenshots/ when a test fails.
 * pages/base_page.py: Shared actions (find, click, type, read, wait) used by every page object.
 * pages/practice_form_page.py: Everything about the Practice Form: locators, actions, and ways to read the page state.
+* pages/upload_page.py, pages/alerts_page.py, pages/dynamic_properties_page.py, pages/progress_bar_page.py: Additional page objects handling file uploads, JavaScript alerts, and asynchronous elements.
 * tests/ui/: 	Test scenarios and assertions only.
-* test-data/ :Data sets for data-driven tests (JSON).
+* test-data/ :Data sets for data-driven tests (JSON, txt, png).
 * utils/data_factory.py : Builds valid test data with unique values for each test.
 
 ### Page Object Model 
@@ -28,7 +31,9 @@ Each page has one class that owns its locators and actions. Tests call readable 
 Locators prefer stable attributes: element ids (firstName, userNumber), for attributes of labels, and semantic CSS classes of widgets. We avoid XPath tied to page layout or position. The only XPath used targets dropdown options by their visible text, which is the stable part of that widget.
 
 ### Synchronization
-No fixed sleep is used anywhere. BasePage relies on WebDriverWait with explicit conditions (presence, visibility, clickability) and a configurable timeout. Elements are scrolled into view before interaction. If a normal click is intercepted by an overlay (advertisement), the page object falls back to a JavaScript click, and the advertisement banner and footer are removed after page load. For the React-based State/City dropdowns, the page object types into the dropdown's search field, waits for the option to appear, and confirms with Enter; a plain click does not open this widget reliably.
+No fixed sleep is used anywhere. BasePage relies on WebDriverWait with explicit conditions (presence, visibility, clickability) and a configurable timeout. Elements are scrolled into view before interaction. If a normal click is intercepted by an overlay (advertisement), the page object falls back to a JavaScript click, and the advertisement banner and footer are removed after page load. \
+For the React-based State/City dropdowns, the page object types into the dropdown's search field, waits for the option to appear, and confirms with Enter; a plain click does not open this widget reliably. \
+For dynamic UI elements (such as delayed buttons or progress bars), explicit waits are strictly used to monitor specific state changes. For instance, the framework waits for a specific CSS class (e.g., .bg-success) to appear to confirm a 100% completion state, avoiding any arbitrary timeouts.
 
 ### Assertions 
 Tests check behaviour, not just that a click worked:

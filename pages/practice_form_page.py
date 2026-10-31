@@ -24,6 +24,7 @@ class PracticeFormPage(BasePage):
     ADDRESS = (By.ID, "currentAddress")  # <textarea>
     SUBMIT = (By.ID, "submit")
     FIRST_GENDER_RADIO = (By.ID, "gender-radio-1")
+    PICTURE_INPUT = (By.ID, "uploadPicture")
 
     # Date picker (react-datepicker)
     DOB_INPUT = (By.ID, "dateOfBirthInput")
@@ -74,6 +75,9 @@ class PracticeFormPage(BasePage):
                 ":not(.react-datepicker__day--outside-month)",
             )
         )
+
+    def upload_picture(self, file_path: str):
+        self.find(self.PICTURE_INPUT).send_keys(file_path)
 
     def select_state(self, state: str):
         self._select_react_option(self.STATE, state)
