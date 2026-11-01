@@ -2,7 +2,20 @@
 
 Application under test: **DemoQA** – https://demoqa.com.
 
-**Why Selenium, Python and pytest**
+### Installation
+```
+git clone https://github.com/Jeannettte/automation-projet.git
+cd automation-projet
+git checkout -b prenom-ma-partie
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+copy .env.example .env
+pytest -m smoke
+```
+pytest -m smoke serve to verify if the installation process is correct 
+
+### Why Selenium, Python and pytest
 Selenium drives a real Chrome browser through the WebDriver protocol: it opens pages, fills fields, clicks, and reads what is displayed. It was the tool assigned to our team.
 
 Python was chosen for its short, readable syntax and for its ecosystem, which covers every requirement of the assignment without extra tooling: pytest (test runner and assertions), pytest.mark.parametrize (data-driven tests), pytest-xdist (parallel execution), pytest-html (reports), requests and jsonschema (API tests), python-dotenv (configuration).
