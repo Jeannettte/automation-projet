@@ -6,7 +6,6 @@ Application under test: **DemoQA** – https://demoqa.com.
 ```
 git clone https://github.com/Jeannettte/automation-projet.git
 cd automation-projet
-git checkout -b prenom-ma-partie
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
