@@ -21,6 +21,7 @@ BookStore API (DemoQA) exposes a REST API with account creation, token authentic
 * pages/practice_form_page.py: Everything about the Practice Form: locators, actions, and ways to read the page state.
 * pages/upload_page.py, pages/alerts_page.py, pages/dynamic_properties_page.py, pages/progress_bar_page.py: Additional page objects handling file uploads, JavaScript alerts, and asynchronous elements.
 * tests/ui/: 	Test scenarios and assertions only.
+* tests/api/: Test scenarios and assertions for the API.
 * test-data/ :Data sets for data-driven tests (JSON, txt, png).
 * utils/data_factory.py : Builds valid test data with unique values for each test.
 
@@ -41,6 +42,7 @@ Tests check behaviour, not just that a click worked:
 * the confirmation title and every displayed value 
 * the HTML5 validity state of required fields (checkValidity), plus the "validated" state of the form, to confirm that invalid submissions are rejected;
 * the absence of the confirmation dialog when a submission must be refused.
+* the correct return code in the case of an API call
 
 ### Test data and data-driven testing
 data_factory.py generates a valid student with a random suffix in the name and e-mail, so each test uses its own data. UI-03 is data-driven: the same test function runs against each entry of test-data/phone_boundaries.json (9 digits rejected, 10 digits accepted), and the report shows one line per data set. UI-03c checks the upper boundary (11 digits) as a rule: the application must never accept more than 10 digits, whether it truncates the input or rejects the form.
